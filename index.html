@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои ссылки - Главная</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="nav-main">
+        <a href="index.html" class="nav-active">Главная</a>
+        <a href="admin.html">Админка</a>
+        <a href="settings.html">Настройки</a>
+    </nav>
+    
+    <main class="main-home">
+        <header class="hero-section">
+            <h1>📎 Мои ссылки</h1>
+            <a href="admin.html" class="btn-primary btn-large">➕ Добавить ссылку</a>
+        </header>
+        
+        <section class="links-grid" id="links-container">
+            <!-- Ссылки будут загружены JS -->
+        </section>
+        
+        <div class="empty-state" id="empty-state">
+            <div class="empty-icon">📁</div>
+            <h2>Ссылок пока нет</h2>
+            <p>Добавьте первую ссылку в <a href="admin.html">админке</a></p>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        loadLinks();
+    </script>
+</body>
+</html>
