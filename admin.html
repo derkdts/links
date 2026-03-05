@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои ссылки - Админка</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="admin.html">Админка</a>
+        <a href="settings.html">Настройки</a>
+    </nav>
+    
+    <main>
+        <h1>Управление ссылками</h1>
+        
+        <!-- Форма добавления НОВОЙ ссылки -->
+        <div class="form-container" id="add-form">
+            <h3>Добавить новую ссылку</h3>
+            <input type="text" id="link-title" placeholder="Название ссылки">
+            <input type="url" id="link-url" placeholder="https://example.com">
+            <button onclick="addLink()">Добавить</button>
+        </div>
+
+        <!-- Форма РЕДАКТИРОВАНИЯ (скрыта по умолчанию) -->
+        <div class="form-container" id="edit-form" style="display: none;">
+            <h3>Редактировать ссылку</h3>
+            <input type="text" id="edit-title" placeholder="Новое название">
+            <input type="url" id="edit-url" placeholder="Новый URL">
+            <div class="edit-buttons">
+                <button onclick="saveEdit()" class="save-btn">Сохранить</button>
+                <button onclick="cancelEdit()" class="cancel-btn">Отмена</button>
+            </div>
+        </div>
+
+        <div id="admin-links"></div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        loadAdminLinks();
+    </script>
+</body>
+</html>
