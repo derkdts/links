@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои ссылки - Настройки</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Главная</a>
+        <a href="admin.html">Админка</a>
+        <a href="settings.html">Настройки</a>
+    </nav>
+    
+    <main>
+        <h1>Настройки</h1>
+        <div class="settings-buttons">
+            <button onclick="exportLinks()">Экспорт (JSON)</button>
+            <label class="file-input">
+                <input type="file" id="import-file" accept=".json" onchange="importLinks(event)">
+                Импорт (JSON)
+            </label>
+            <button onclick="clearAllLinks()">Очистить все ссылки</button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
