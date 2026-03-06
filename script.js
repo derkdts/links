@@ -1,7 +1,7 @@
 let links = JSON.parse(localStorage.getItem('savedLinks')) || [];
-let editingIndex = -1; // Индекс редактируемой ссылки
+let editingIndex = -1;
 
-// Загрузка ссылок на главной (ТОЛЬКО просмотр)
+// Загрузка ссылок на главной (только название + клик по карточке)
 function loadLinks() {
     const container = document.getElementById('links-container');
     const emptyState = document.getElementById('empty-state');
@@ -22,14 +22,20 @@ function loadLinks() {
         div.className = 'link-item';
         div.innerHTML = `
             <h3>${link.title}</h3>
-            <a href="${link.url}" target="_blank">${link.url}</a>
             <div class="link-date">Добавлено: ${new Date(link.date).toLocaleDateString('ru-RU')}</div>
+            <div class="link-hint">👆 Нажмите чтобы открыть</div>
         `;
+        // Клик по ВСЕЙ карточке открывает ссылку
+        div.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'BUTTON') {
+                window.open(link.url, '_blank');
+            }
+        });
         container.appendChild(div);
     });
 }
 
-// Загрузка в админке (с кнопками редактирования/удаления)
+// Загрузка в админке (полный вид с кнопками)
 function loadAdminLinks() {
     const container = document.getElementById('admin-links');
     if (!container) return;
@@ -48,8 +54,8 @@ function loadAdminLinks() {
             <a href="${link.url}" target="_blank">${link.url}</a>
             <div class="link-date">Добавлено: ${new Date(link.date).toLocaleDateString('ru-RU')}</div>
             <div class="link-actions">
-                <button class="edit-btn" onclick="editLink(${index})">Редактировать</button>
-                <button class="delete-btn" onclick="deleteLink(${index})">Удалить</button>
+                <button class="edit-btn" onclick="editLink(${index}); event.stopPropagation();">Редактировать</button>
+                <button class="delete-btn" onclick="deleteLink(${index}); event.stopPropagation();">Удалить</button>
             </div>
         `;
         container.appendChild(div);
@@ -60,18 +66,15 @@ function loadAdminLinks() {
 function editLink(index) {
     editingIndex = index;
     
-    // Показываем форму редактирования, скрываем форму добавления
     const addForm = document.getElementById('add-form');
     const editForm = document.getElementById('edit-form');
     
     if (addForm) addForm.style.display = 'none';
     if (editForm) editForm.style.display = 'block';
     
-    // Заполняем форму текущими данными
     document.getElementById('edit-title').value = links[index].title;
     document.getElementById('edit-url').value = links[index].url;
     
-    // Прокручиваем к форме
     editForm.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -90,19 +93,15 @@ function saveEdit() {
         return;
     }
     
-    // Обновляем ссылку
     links[editingIndex] = {
         title, 
         url, 
-        date: links[editingIndex].date // сохраняем старую дату
+        date: links[editingIndex].date
     };
     
     localStorage.setItem('savedLinks', JSON.stringify(links));
     
-    // Сбрасываем форму редактирования
     cancelEdit();
-    
-    // Обновляем все страницы
     loadLinks();
     loadAdminLinks();
     
@@ -118,7 +117,6 @@ function cancelEdit() {
     if (addForm) addForm.style.display = 'block';
     if (editForm) editForm.style.display = 'none';
     
-    // Очищаем поля
     const editTitle = document.getElementById('edit-title');
     const editUrl = document.getElementById('edit-url');
     if (editTitle) editTitle.value = '';
